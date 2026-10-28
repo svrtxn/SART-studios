@@ -1,0 +1,232 @@
+<div class="account-detail-container" *ngIf="account">  <!-- Save Alert -->
+  <div *ngIf="saveAlert" 
+       style="position: fixed; top: 24px; right: 24px; z-index: 1000; padding: 16px 24px; border-radius: 12px; display: flex; align-items: center; gap: 12px; animation: slideIn 0.3s ease-out; box-shadow: 0 8px 24px rgba(0,0,0,0.3);"
+       [style.background]="saveAlert.type === 'success' ? 'rgba(16, 185, 129, 0.95)' : 'rgba(239, 68, 68, 0.95)'"
+       [style.color]="'white'">
+    <!-- Check icon for success -->
+    <svg *ngIf="saveAlert.type === 'success'" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+    <!-- X icon for error -->
+    <svg *ngIf="saveAlert.type === 'error'" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    <span style="font-weight: 500;">{{ saveAlert.message }}</span>
+  </div>
+
+  <div style="margin-bottom: 24px;">
+    <a routerLink="/accounts" class="btn btn-icon" style="border: 1px solid var(--color-border); background: var(--color-surface); padding: 8px 16px; border-radius: 8px; color: var(--color-text-secondary); display: inline-flex; align-items: center; gap: 8px; font-size: 14px; text-decoration: none;">&larr; Volver a Cuentas</a>
+  </div>
+
+  <div class="header mb-8 flex justify-between items-center" style="margin-bottom: 32px;">
+    <h1 style="margin: 0;">Detalles de Cuenta</h1>
+    <div style="display: flex; gap: 16px;">
+      <button class="btn btn-danger" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2);" (click)="deleteAccount()">Eliminar Cuenta</button>
+    </div>
+  </div>
+
+  <div class="layout-grid" style="display: grid; grid-template-columns: 350px 1fr; gap: 32px;">
+    <!-- Sidebar: Tarjeta Virtual -->
+    <div class="sidebar">
+      <div class="account-card" 
+           [style.--card-color]="getBankInfo(account.bankName).color"
+           [style.background]="'linear-gradient(135deg, var(--card-color) 0%, color-mix(in srgb, var(--card-color) 40%, black) 100%)'"
+           style="cursor: default; transform: scale(1); margin-bottom: 24px;">
+           
+        <div class="flex justify-between items-start" style="min-height: 32px;">
+          <ng-container *ngIf="getBankInfo(account.bankName).logo">
+            <div style="background: rgba(255,255,255,0.95); padding: 6px 10px; border-radius: 6px; display: inline-flex; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+              <img [src]="getBankInfo(account.bankName).logo" alt="Bank logo" style="height: 20px; object-fit: contain; object-position: left;">
+            </div>
+          </ng-container>
+          <ng-container *ngIf="!getBankInfo(account.bankName).logo">
+            <div style="font-weight: bold; font-size: 16px; color: white; text-shadow: 0 1px 3px rgba(0,0,0,0.5); letter-spacing: 1px; padding-top: 4px;">
+              {{ (account.bankName || account.name).toUpperCase() }}
+            </div>
+          </ng-container>
+        </div>
+
+        <div style="margin-top: auto; margin-bottom: 16px; display: flex; align-items: center; gap: 12px; opacity: 0.9;">
+          <svg width="42" height="32" viewBox="0 0 42 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="42" height="32" rx="4" fill="#D4AF37"/>
+            <path d="M12 0V32M30 0V32M0 10H42M0 22H42" stroke="#B8860B" stroke-width="1.5"/>
+            <rect x="8" y="6" width="26" height="20" rx="3" stroke="#B8860B" stroke-width="1.5" fill="none"/>
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.7;"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+        </div>
+        
+        <div style="color: white; font-family: monospace; font-size: 18px; letter-spacing: 2px; margin-bottom: 12px; text-shadow: 0 1px 2px rgba(0,0,0,0.5); opacity: 0.9;">
+          **** **** **** {{ account.cardNumber ? (account.cardNumber.slice(-4) || '****') : '****' }}
+        </div>
+        
+        <div style="font-size: var(--text-h2-size); line-height: var(--text-h2-line);" class="font-bold font-primary" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.4); letter-spacing: 2px;">
+          ${{ account.currentBalance | number }}
+        </div>
+
+        <div class="flex justify-between items-end mt-4" style="color: rgba(255,255,255,0.9); text-shadow: 0 1px 3px rgba(0,0,0,0.5);">
+          <div>
+            <h3 style="margin: 0; font-size: 15px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.9;">{{ account.name }}</h3>
+          </div>
+          <div style="text-align: right;">
+            <span style="font-size: 11px; text-transform: uppercase; font-weight: 600; letter-spacing: 1px;">
+              {{ account.type === 'CREDIT' ? 'Crédito' : account.type === 'SAVINGS' ? 'Ahorro' : 'Débito' }}
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      <a [routerLink]="['/transactions']" [queryParams]="{ account: account.id }" class="btn btn-primary w-full" style="display: flex; justify-content: center; align-items: center; gap: 8px; text-decoration: none;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v-6M6 20V10M18 20V4"/></svg>
+        Ver Movimientos
+      </a>
+    </div>
+
+    <!-- Main Content: Tabs & Forms -->
+    <div class="main-content">
+      <div class="tabs" style="display: flex; gap: 8px; border-bottom: 1px solid var(--color-border); margin-bottom: 24px; padding-bottom: 16px;">
+        <button class="tab-btn" [class.active]="activeTab === 'config'" (click)="activeTab = 'config'" style="display: flex; align-items: center; gap: 8px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          Configuración
+        </button>
+        <button class="tab-btn" [class.active]="activeTab === 'wallet'" (click)="activeTab = 'wallet'" style="display: flex; align-items: center; gap: 8px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+          Billetera Segura
+        </button>
+      </div>
+
+      <!-- Config Tab -->
+      <div *ngIf="activeTab === 'config'" class="tab-panel form-card">
+        <h3 style="margin-bottom: 24px;">Configuración General</h3>
+        
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label>Institución Financiera</label>
+          <select [(ngModel)]="account.bankName" class="form-control">
+            <option value="">Ninguna</option>
+            <option *ngFor="let b of BANKS" [value]="b.name">{{b.name}}</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label>Nombre de la Tarjeta (Personalizado)</label>
+          <input type="text" [(ngModel)]="account.name" class="form-control" placeholder="Ej. Mi tarjeta principal">
+          <small style="color: var(--color-text-secondary); margin-top: 4px; display: block;">Te ayuda a identificarla si tienes múltiples en el mismo banco.</small>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 24px;">
+          <label>Tipo de Cuenta</label>
+          <select [(ngModel)]="account.type" class="form-control">
+            <option value="CHECKING">Cuenta Corriente / Vista</option>
+            <option value="CREDIT">Tarjeta de Crédito</option>
+            <option value="SAVINGS">Cuenta de Ahorro</option>
+          </select>
+        </div>
+
+        <button class="btn btn-primary" (click)="saveConfig()">Guardar Cambios</button>
+      </div>
+
+      <!-- Wallet Tab -->
+      <div *ngIf="activeTab === 'wallet'" class="tab-panel form-card">
+        <div style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444; padding: 16px; border-radius: 0 8px 8px 0; margin-bottom: 24px;">
+          <h4 style="color: #ef4444; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Almacenamiento Local
+          </h4>
+          <p style="color: var(--color-text-secondary); margin: 0; font-size: var(--text-sm);">
+            Estos datos se guardan estrictamente en tu base de datos local y no se comparten con ningún servidor. Aún así, te recomendamos tener cuidado y no usar esta función si compartes tu PC con otras personas.
+          </p>
+        </div>
+
+        <!-- SECTION: Datos de la Cuenta -->
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <h3 style="margin: 0; font-size: 16px;">Datos de la Cuenta Bancaria</h3>
+            <div style="display: flex; gap: 8px;">
+              <!-- Copy All Button -->
+              <button class="btn" style="background: var(--color-bg); border: 1px solid var(--color-border); padding: 8px 14px; display: flex; align-items: center; gap: 8px; border-radius: 8px; color: var(--color-text-primary); font-size: 13px; transition: all 0.2s;" (click)="copyAllAccountData()" title="Copiar todos los datos de la cuenta">
+                <svg *ngIf="copiedField !== 'all-account'" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                <svg *ngIf="copiedField === 'all-account'" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                {{ copiedField === 'all-account' ? '¡Copiado!' : 'Copiar Todo' }}
+              </button>
+              <!-- Eye Toggle -->
+              <button class="btn" style="background: var(--color-bg); border: 1px solid var(--color-border); padding: 8px; display: flex; align-items: center; justify-content: center; border-radius: 8px; color: var(--color-text-primary); transition: background 0.2s;" (click)="showSensitive = !showSensitive" [title]="showSensitive ? 'Ocultar Datos' : 'Mostrar Datos'">
+                <svg *ngIf="!showSensitive" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg *ngIf="showSensitive" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div class="form-group">
+              <label>Banco (Institución)</label>
+              <input type="text" [value]="account.bankName || 'Ninguno'" class="form-control" disabled style="opacity: 0.7;">
+            </div>
+            <div class="form-group">
+              <label>Número de Cuenta</label>
+              <input [type]="showSensitive ? 'text' : 'password'" [(ngModel)]="account.accountNumber" class="form-control" placeholder="Ej. 123456789">
+            </div>
+            <div class="form-group">
+              <label>Nombre del Titular</label>
+              <input [type]="showSensitive ? 'text' : 'password'" [(ngModel)]="account.ownerName" class="form-control" placeholder="Ej. Juan Pérez">
+            </div>
+            <div class="form-group">
+              <label>RUT del Titular</label>
+              <input [type]="showSensitive ? 'text' : 'password'" [(ngModel)]="account.ownerRut" class="form-control" placeholder="Ej. 12.345.678-9">
+            </div>
+            <div class="form-group" style="grid-column: 1 / -1;">
+              <label>Correo Electrónico Asociado</label>
+              <input [type]="showSensitive ? 'text' : 'password'" [(ngModel)]="account.ownerEmail" class="form-control" placeholder="Ej. juan@correo.com">
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION: Datos de la Tarjeta -->
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+          <h3 style="margin: 0 0 24px 0; font-size: 16px;">Datos de la Tarjeta (Plástico/Virtual)</h3>
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div class="form-group" style="grid-column: 1 / -1;">
+              <label>Número de Tarjeta (PAN)</label>
+              <div style="display: flex; gap: 8px;">
+                <input [type]="showSensitive ? 'text' : 'password'" 
+                       [value]="showSensitive ? getCardNumberDisplay() : account.cardNumber" 
+                       (input)="onCardNumberInput($event)" 
+                       class="form-control" 
+                       placeholder="Ej. 4000 1234 5678 9010"
+                       maxlength="19"
+                       style="font-family: monospace; letter-spacing: 2px;">
+                <button class="btn" style="background: var(--color-bg); border: 1px solid var(--color-border); padding: 8px 12px; display: flex; align-items: center; justify-content: center; border-radius: 8px; color: var(--color-text-primary);" (click)="copyToClipboard(account.cardNumber, 'card')" title="Copiar al portapapeles">
+                  <svg *ngIf="copiedField !== 'card'" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                  <svg *ngIf="copiedField === 'card'" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Fecha de Vencimiento</label>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <select [(ngModel)]="expMonth" (ngModelChange)="updateExpiration()" class="form-control" style="flex: 1;">
+                  <option value="" disabled>Mes</option>
+                  <option *ngFor="let m of months" [value]="m">{{ m }}</option>
+                </select>
+                <span style="color: var(--color-text-secondary); font-size: 18px; font-weight: bold;">/</span>
+                <select [(ngModel)]="expYear" (ngModelChange)="updateExpiration()" class="form-control" style="flex: 1;">
+                  <option value="" disabled>Año</option>
+                  <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>CVV / CVC</label>
+              <div style="display: flex; gap: 8px;">
+                <input [type]="showSensitive ? 'text' : 'password'" [(ngModel)]="account.cvv" class="form-control" placeholder="Ej. 123">
+                <button class="btn" style="background: var(--color-bg); border: 1px solid var(--color-border); padding: 8px 12px; display: flex; align-items: center; justify-content: center; border-radius: 8px; color: var(--color-text-primary);" (click)="copyToClipboard(account.cvv, 'cvv')" title="Copiar CVV">
+                  <svg *ngIf="copiedField !== 'cvv'" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                  <svg *ngIf="copiedField === 'cvv'" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" (click)="saveWallet()">Guardar Billetera</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-bg-light text-text-primary font-sans leading-relaxed tracking-normal;
+    margin: 0;
+    padding: 0;
+  }
+
+  h1 {
+    @apply text-[64px] font-bold leading-[72px] tracking-tight;
+  }
+
+  h2 {
+    @apply text-[48px] font-bold leading-[56px] tracking-tight;
+  }
+
+  h3 {
+    @apply text-[40px] font-semibold leading-[48px] tracking-tight;
+  }
+
+  h4 {
+    @apply text-[32px] font-semibold leading-[40px] tracking-tight;
+  }
+
+  h5 {
+    @apply text-[24px] font-semibold leading-[32px] tracking-tight;
+  }
+
+  h6 {
+    @apply text-[20px] font-semibold leading-[28px] tracking-tight;
+  }
+
+  p {
+    @apply text-base text-text-secondary max-w-[75ch];
+  }
+}
+
+@layer components {
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center font-semibold text-[16px] tracking-[0.2px] rounded-lg transition-all duration-fast ease-primary cursor-pointer border border-transparent;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-white h-12 px-6 shadow-md hover:brightness-105 hover:-translate-y-[2px];
+  }
+
+  .btn-secondary {
+    @apply bg-white border-primary text-primary hover:bg-info-bg;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent text-primary hover:bg-neutral-100;
+  }
+
+  .btn-danger {
+    @apply bg-danger text-white;
+  }
+
+  .btn-success {
+    @apply bg-success text-white;
+  }
+
+  .btn-icon {
+    @apply w-10 h-10 rounded-md p-0 flex items-center justify-center;
+  }
+
+  /* Cards */
+  .card {
+    @apply bg-white rounded-[24px] p-8 border border-neutral-200 shadow-sm transition-all duration-normal ease-primary;
+  }
+
+  .card-elevated {
+    @apply shadow-md hover:-translate-y-1 hover:shadow-lg;
+  }
+
+  /* Inputs */
+  .input {
+    @apply h-12 rounded-[14px] px-4 border border-neutral-200 bg-white text-text-primary focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all duration-fast ease-primary w-full;
+  }
+
+  .input-search {
+    @apply pl-10;
+  }
+
+  /* Badges */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-[13px] font-semibold uppercase tracking-[0.8px];
+  }
+
+  .badge-success {
+    @apply bg-success-bg text-success border border-success-border;
+  }
+
+  .badge-warning {
+    @apply bg-warning-bg text-warning border border-warning-border;
+  }
+
+  .badge-danger {
+    @apply bg-danger-bg text-danger border border-danger-border;
+  }
+
+  .badge-info {
+    @apply bg-info-bg text-info border border-info-border;
+  }
+
+  .badge-neutral {
+    @apply bg-neutral-100 text-neutral-600 border border-neutral-200;
+  }
+}

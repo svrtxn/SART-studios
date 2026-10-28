@@ -1,0 +1,47 @@
+<div class="transactions-header flex justify-between items-center mb-8">
+  <h1>Movimientos</h1>
+  <div class="actions">
+    <button class="btn btn-secondary mr-2">Importar PDF</button>
+    <button class="btn btn-primary">Nuevo Movimiento</button>
+  </div>
+</div>
+
+<div class="filters-bar mb-6 flex items-center">
+  <input type="text" placeholder="Buscar..." class="filter-input mr-4">
+  <select class="filter-select mr-4">
+    <option>Todas las cuentas</option>
+    <option>Banco Santander</option>
+  </select>
+  <select class="filter-select">
+    <option>Todas las categorías</option>
+    <option>Alimentación</option>
+  </select>
+</div>
+
+<div class="table-container">
+  <table class="w-full text-left border-collapse">
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Descripción</th>
+        <th>Categoría</th>
+        <th>Cuenta</th>
+        <th class="text-right">Monto</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let t of transactions" class="border-b hover:bg-n-50">
+        <td class="py-3">{{ t.date }}</td>
+        <td class="py-3 font-medium">{{ t.description }}</td>
+        <td class="py-3"><span class="tag">{{ t.category }}</span></td>
+        <td class="py-3 text-secondary">{{ t.account }}</td>
+        <td class="py-3 text-right font-bold" 
+            [class.text-danger]="t.amount < 0 && t.type !== 'TRANSFER_OUT'" 
+            [class.text-success]="t.amount > 0"
+            [class.text-secondary]="t.type === 'TRANSFER_OUT' || t.type === 'TRANSFER_IN'">
+          {{ t.amount > 0 ? '+' : '' }}${{ t.amount | number }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Organiza cursos y rutinas de aprendizaje en distintas áreas, sigue tu avance y estudia con sesiones de enfoque."
+    />
+    <meta name="theme-color" content="#ffffff" />
+    <title>SART STUDIOS | Panel de aprendizaje</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#" id="home-link" aria-label="SART - Aprende, inicio">
+        <img class="brand-logo-light" src="assets/sart-aprende.png" alt="SART - Aprende" />
+        <img class="brand-logo-dark" src="assets/sart-aprende-dark.png" alt="" aria-hidden="true" />
+      </a>
+      <div class="topbar-context">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span>SART - Aprende</span>
+      </div>
+      <div class="topbar-actions">
+        <button
+          class="icon-button theme-toggle"
+          id="theme-toggle"
+          type="button"
+          aria-label="Activar modo oscuro"
+          title="Activar modo oscuro"
+        ></button>
+      </div>
+    </header>
+
+    <main id="app" class="app-shell" tabindex="-1">
+      <div class="loading-state" role="status">Preparando tus rutas de aprendizaje...</div>
+    </main>
+
+    <div
+      id="modal"
+      class="modal-overlay"
+      role="presentation"
+      hidden
+    >
+      <section
+        class="modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+        aria-describedby="modal-message"
+      >
+        <button class="icon-button modal-close" type="button" aria-label="Cerrar diálogo" data-close-modal>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m18 6-12 12M6 6l12 12"></path>
+          </svg>
+        </button>
+        <div class="modal-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="m12 3 1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2L12 3Z"></path>
+            <path d="m19 16 .8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16Z"></path>
+          </svg>
+        </div>
+        <p class="eyebrow">SART STUDIOS · APRENDIZAJE</p>
+        <h2 id="modal-title">Aviso</h2>
+        <p id="modal-message" class="modal-message"></p>
+        <button class="button button-primary modal-action" type="button" data-close-modal>
+          Entendido
+        </button>
+      </section>
+    </div>
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  </body>
+</html>

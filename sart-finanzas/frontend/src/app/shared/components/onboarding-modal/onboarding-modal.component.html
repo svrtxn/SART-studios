@@ -1,0 +1,29 @@
+<div *ngIf="tourService.isActive" class="tour-overlay"></div>
+
+<div *ngIf="tourService.isActive && currentStep" class="tour-tooltip-box" [ngStyle]="tooltipStyle">
+  <div class="icon-circle primary-icon mx-auto mb-6" *ngIf="currentStep.stepIndex === 1">
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+  </div>
+  
+  <h2 class="mb-4 text-center" *ngIf="currentStep.stepIndex === 1">{{ currentStep.title }}</h2>
+  <h3 class="mb-4" *ngIf="currentStep.stepIndex > 1" style="margin-top: 0;">{{ currentStep.title }}</h3>
+  
+  <p class="text-secondary mb-6 text-lg" [ngClass]="{'text-center': currentStep.stepIndex === 1}" style="line-height: 1.6;">
+    {{ currentStep.text }}
+  </p>
+  
+  <div class="flex" [ngClass]="currentStep.stepIndex === 1 ? 'justify-center' : 'justify-between'" style="align-items: center; gap: 16px;">
+    <button class="btn btn-secondary" *ngIf="currentStep.stepIndex > 1" (click)="skip()">Omitir Tour</button>
+    
+    <button class="btn btn-primary" [ngClass]="{'w-full btn-lg': currentStep.stepIndex === 1}" (click)="next()">
+      {{ currentStep.stepIndex === 3 ? '¡Entendido!' : 'Siguiente' }}
+    </button>
+  </div>
+  
+  <!-- Progress Dots -->
+  <div class="progress-dots mt-8" *ngIf="currentStep.stepIndex === 1">
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+</div>

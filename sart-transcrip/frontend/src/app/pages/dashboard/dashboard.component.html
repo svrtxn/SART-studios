@@ -1,0 +1,30 @@
+<div class="dashboard-hub-container">
+  
+  <div class="hero-section">
+    <h1>Bienvenido a SART-ESTUDIO</h1>
+    <p class="text-secondary">Tu plataforma inteligente para transcribir clases y estudiar con cuestionarios generados por IA.</p>
+  </div>
+
+  <div class="hub-grid">
+    <app-card class="hub-card card-hover" (click)="goToTranscriptions()">
+      <div class="hub-card-content">
+        <div class="icon-wrapper transcription-icon">
+          <lucide-icon name="mic" size="32"></lucide-icon>
+        </div>
+        <h2>Transcripciones</h2>
+        <p class="text-secondary">Sube archivos de audio o video y obtén el texto completo usando Inteligencia Artificial.</p>
+      </div>
+    </app-card>
+
+    <app-card class="hub-card card-hover" (click)="goToQuizzes()">
+      <div class="hub-card-content">
+        <div class="icon-wrapper quiz-icon">
+          <lucide-icon name="file-text" size="32"></lucide-icon>
+        </div>
+        <h2>Cuestionarios</h2>
+        <p class="text-secondary">Genera exámenes de opción múltiple a partir de tus apuntes y evalúa tu conocimiento.</p>
+      </div>
+    </app-card>
+  </div>
+
+</div>

@@ -1,0 +1,99 @@
+<div class="transcriptions-container" style="max-width: 800px; margin: 0 auto; padding-bottom: 64px;">
+  
+  <!-- Upload Section (Action First) -->
+  <app-card style="margin-bottom: 48px;">
+    <h2 style="margin-top: 0; margin-bottom: 24px;">Transcribe tus audios o videos</h2>
+    
+    <div *ngIf="uploadStatus === 'idle'">
+      <div *ngIf="uploadError" class="error-alert-global">
+        <lucide-icon name="alert-circle"></lucide-icon>
+        <span>{{ uploadError }}</span>
+      </div>
+
+      <div class="file-drop-area">
+        <input type="file" id="file-upload" (change)="onFileSelected($event)" accept="audio/*,video/*">
+        <label for="file-upload">
+          <lucide-icon name="upload-cloud" size="48" style="color: var(--primary-blue); margin-bottom: 16px;"></lucide-icon>
+          <span *ngIf="!selectedFile" class="d-block">Elige un archivo o arrástralo aquí</span>
+          <span *ngIf="selectedFile" class="d-block">Seleccionado: {{ selectedFile.name }}</span>
+        </label>
+      </div>
+
+      <div class="actions" style="display: flex; justify-content: flex-end; margin-top: 24px;">
+        <app-button variant="primary" [disabled]="!selectedFile" (onClick)="onUpload()">
+          Subir y Transcribir
+        </app-button>
+      </div>
+    </div>
+
+    <!-- Uploading State -->
+    <div *ngIf="uploadStatus === 'uploading'" class="status-view">
+      <div class="spinner-large"></div>
+      <h3>Subiendo archivo...</h3>
+      <p class="text-secondary">Por favor, no cierres esta ventana.</p>
+    </div>
+
+    <!-- Success State -->
+    <div *ngIf="uploadStatus === 'success'" class="status-view success">
+      <lucide-icon name="check-circle" size="64" style="color: var(--success); margin-bottom: 16px;"></lucide-icon>
+      <h3>¡Archivo Subido con Éxito!</h3>
+      <p class="text-secondary">El archivo ha sido enviado y pronto comenzará la transcripción.</p>
+      <div class="actions center-actions" style="margin-top: 24px;">
+        <app-button variant="primary" (onClick)="resetUpload()">Transcribir Otro</app-button>
+      </div>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="uploadStatus === 'error'" class="status-view error">
+      <lucide-icon name="alert-circle" size="64" style="color: var(--danger); margin-bottom: 16px;"></lucide-icon>
+      <h3 style="color: var(--danger);">Ocurrió un Error</h3>
+      <p class="text-secondary">{{ uploadError }}</p>
+      <div class="actions center-actions" style="margin-top: 24px;">
+        <app-button variant="primary" (onClick)="resetUpload()">Intentar de Nuevo</app-button>
+      </div>
+    </div>
+  </app-card>
+
+  <!-- History Section -->
+  <div>
+    <h2 style="margin-bottom: 16px;">Historial de Transcripciones</h2>
+
+    <div *ngIf="loading" class="loading-state" style="text-align: center; padding: 48px 0;">
+      <div class="spinner-large" style="margin: 0 auto 16px;"></div>
+      <p>Cargando transcripciones...</p>
+    </div>
+
+    <div *ngIf="loadError" class="error-alert-global">
+      <lucide-icon name="alert-circle"></lucide-icon>
+      <span>{{ loadError }}</span>
+    </div>
+
+    <div *ngIf="!loading && !loadError && transcriptions.length === 0" class="empty-state" style="text-align: center; padding: 48px; border: 1px dashed var(--border); border-radius: var(--radius-lg);">
+      <lucide-icon name="file-text" size="48" style="color: var(--neutral-400); margin-bottom: 16px;"></lucide-icon>
+      <h3>Aún no hay transcripciones</h3>
+      <p class="text-secondary">Tus transcripciones aparecerán aquí una vez que subas un archivo.</p>
+    </div>
+
+    <div *ngIf="!loading && transcriptions.length > 0" class="transcriptions-grid" style="display: grid; gap: 16px;">
+      <app-card *ngFor="let t of transcriptions" class="card-hover">
+        <div style="display: flex; gap: 16px; align-items: flex-start;">
+          <div style="background-color: var(--info-bg); padding: 12px; border-radius: var(--radius-md); color: var(--primary-blue);">
+            <lucide-icon name="file-text"></lucide-icon>
+          </div>
+          <div style="flex-grow: 1;">
+            <h4 style="margin: 0 0 8px 0;">{{ t.filename }}</h4>
+            <div style="display: flex; gap: 12px; align-items: center;">
+              <span class="status-badge" [ngClass]="t.status.toLowerCase()">{{ t.status }}</span>
+              <p class="text-secondary" style="font-size: 13px; margin: 0;">{{ t.createdAt | date:'medium' }}</p>
+            </div>
+            
+            <div *ngIf="t.status.toLowerCase() === 'error' && t.errorMessage" class="error-alert-global" style="margin-top: 12px; padding: 8px;">
+              <lucide-icon name="alert-circle" size="14"></lucide-icon>
+              {{ t.errorMessage }}
+            </div>
+          </div>
+        </div>
+      </app-card>
+    </div>
+  </div>
+</div>

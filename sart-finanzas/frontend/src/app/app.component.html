@@ -1,0 +1,74 @@
+<div class="app-layout">
+  <!-- Top Navbar -->
+  <header class="navbar">
+    <div class="navbar-left">
+      <div class="logo-container flex items-center">
+        <img src="/S.png" alt="SART STUDIOS Icon" class="brand-icon">
+        <span class="brand-text">SART ECO</span>
+      </div>
+    </div>
+    
+    <nav class="navbar-center">
+      <ul class="nav-links">
+        <li>
+          <a routerLink="/dashboard" routerLinkActive="active">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+            Dashboard
+          </a>
+        </li>
+        <li>
+          <a id="tour-nav-accounts" routerLink="/accounts" routerLinkActive="active">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+            Cuentas
+          </a>
+        </li>
+        <li>
+          <a routerLink="/transactions" routerLinkActive="active">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            Movimientos
+          </a>
+        </li>
+        <li>
+          <a routerLink="/goals" routerLinkActive="active">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+            Metas
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="navbar-right">
+      <!-- Future User Profile -->
+      <div class="user-avatar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+    </div>
+  </header>
+
+  <!-- Action Bar below Navbar -->
+  <div class="action-bar">
+    <div class="content-wrapper flex justify-center">
+      <div class="action-group">
+        <button class="btn btn-success" (click)="openTransactionModal('INCOME')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg> Ingreso</button>
+        <button class="btn btn-danger" (click)="openTransactionModal('EXPENSE')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><line x1="5" x2="19" y1="12" y2="12"/></svg> Egreso</button>
+        <button class="btn btn-primary" routerLink="/import"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="12" x2="12" y1="18" y2="12"/><line x1="9" x2="15" y1="15" y2="15"/></svg> Adjuntar Cartola</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content centered -->
+  <main class="main-content">
+    <div class="content-wrapper">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+
+  <app-transaction-modal
+    *ngIf="isModalOpen"
+    [type]="modalType"
+    (close)="closeTransactionModal()"
+    (saved)="onTransactionSaved()">
+  </app-transaction-modal>
+
+  <app-onboarding-modal></app-onboarding-modal>
+</div>

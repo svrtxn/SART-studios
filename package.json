@@ -1,0 +1,20 @@
+{
+  "name": "sart-studio",
+  "version": "1.0.0",
+  "description": "Root workspace for SART Studio projects",
+  "scripts": {
+    "start": "concurrently \"npm run start:main\" \"npm run start:food:api\" \"npm run start:food:web\" \"npm run start:transcrib:api\" \"npm run start:transcrib:web\" \"npm run start:eco:api\" \"npm run start:eco:web\"",
+    "start:main": "cd sart-main && npm run dev",
+    "start:food:api": "cd sart-food/backend && cross-env PORT=3001 npm run start:dev",
+    "start:food:web": "cd sart-food/frontend && npm run start -- --port 4201",
+    "start:transcrib:api": "cd sart-transcrib/backend && cross-env PORT=3002 npm run start:dev",
+    "start:transcrib:web": "cd sart-transcrib/frontend && npm run start -- --port 4202",
+    "start:eco:api": "cd sart-eco/backend && cross-env PORT=3003 npm run start:dev",
+    "start:eco:web": "cd sart-eco/frontend && npm run start -- --port 4203",
+    "install:all": "npm install && cd sart-main && npm install && cd ../sart-food/backend && npm install && cd ../frontend && npm install && cd ../../sart-transcrib/backend && npm install && cd ../frontend && npm install && cd ../../sart-eco/backend && npm install && cd ../frontend && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3"
+  }
+}

@@ -1,0 +1,124 @@
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h1 {
+    margin: 0 0 8px 0;
+  }
+}
+
+.grid-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--background);
+}
+
+.card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.modern-input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--neutral-300);
+  border-radius: var(--radius-md);
+  font-family: var(--font-secondary);
+  font-size: 16px;
+  transition: all 0.2s;
+  background-color: var(--neutral-50);
+
+  &:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    background-color: var(--surface);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  }
+}
+
+.text-input-area {
+  border: 2px dashed var(--neutral-300);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  background-color: var(--neutral-50);
+  transition: all 0.2s;
+
+  &:focus-within {
+    border-color: var(--primary-blue);
+    background-color: var(--surface);
+  }
+
+  textarea {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-family: var(--font-secondary);
+    font-size: 15px;
+    resize: vertical;
+    outline: none;
+    color: var(--text-primary);
+
+    &::placeholder {
+      color: var(--neutral-400);
+    }
+  }
+}
+
+.error-alert-global {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background-color: var(--danger-bg);
+  color: var(--danger);
+  border: 1px solid var(--danger-border);
+  border-radius: var(--radius-md);
+  margin-bottom: 24px;
+}
+
+.status-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 0;
+  text-align: center;
+
+  h3 {
+    margin: 24px 0 8px;
+    font-size: 24px;
+    color: var(--text-primary);
+  }
+
+  .text-secondary {
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+  }
+}
+
+.spinner-large {
+  width: 64px;
+  height: 64px;
+  border: 6px solid var(--surface);
+  border-top: 6px solid var(--primary-blue);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

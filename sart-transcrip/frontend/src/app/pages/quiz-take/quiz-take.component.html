@@ -1,0 +1,99 @@
+<div class="page-container">
+  <div *ngIf="loading" class="status-view">
+    <div class="spinner-large"></div>
+    <h3>Cargando cuestionario...</h3>
+  </div>
+
+  <div *ngIf="error" class="error-alert-global">
+    <lucide-icon name="alert-circle"></lucide-icon>
+    <span>{{ error }}</span>
+  </div>
+
+  <div *ngIf="quiz && !loading">
+    <div class="dashboard-header" style="margin-bottom: 24px;">
+      <div>
+        <h1 style="margin: 0 0 8px 0;">{{ quiz.title }}</h1>
+        <p class="text-secondary" style="margin: 0;">Responde todas las preguntas para ver tu puntuación.</p>
+      </div>
+      <app-button variant="ghost" (onClick)="goBack()">Volver</app-button>
+    </div>
+
+    <!-- Resultados Globales -->
+    <app-card *ngIf="results" class="results-card" style="margin-bottom: 24px; background-color: var(--surface);">
+      <div style="text-align: center;">
+        <h2 style="margin: 0 0 8px 0;">Resultados: {{ results.score }} / {{ results.total }}</h2>
+        <h1 style="font-size: 48px; margin: 0; color: var(--primary-blue);">{{ results.percentage }}%</h1>
+      </div>
+    </app-card>
+
+    <div class="questions-list">
+      <app-card *ngFor="let question of quiz.questions; let i = index" class="question-card" style="margin-bottom: 24px;">
+        <h3 style="margin: 0 0 16px 0;">{{ i + 1 }}. {{ question.text }}</h3>
+        
+        <div class="options-group">
+          <div 
+            class="option-item" 
+            [class.selected]="answers[question.id] === 'A'"
+            [class.disabled]="isSubmitted"
+            [class.correct]="getQuestionResult(question.id)?.correctAnswer === 'A' && isSubmitted"
+            [class.incorrect]="getQuestionResult(question.id)?.userAnswer === 'A' && !getQuestionResult(question.id)?.isCorrect && isSubmitted"
+            (click)="selectAnswer(question.id, 'A')">
+            <span class="option-letter">A</span> {{ question.optionA }}
+          </div>
+          <div 
+            class="option-item" 
+            [class.selected]="answers[question.id] === 'B'"
+            [class.disabled]="isSubmitted"
+            [class.correct]="getQuestionResult(question.id)?.correctAnswer === 'B' && isSubmitted"
+            [class.incorrect]="getQuestionResult(question.id)?.userAnswer === 'B' && !getQuestionResult(question.id)?.isCorrect && isSubmitted"
+            (click)="selectAnswer(question.id, 'B')">
+            <span class="option-letter">B</span> {{ question.optionB }}
+          </div>
+          <div 
+            class="option-item" 
+            [class.selected]="answers[question.id] === 'C'"
+            [class.disabled]="isSubmitted"
+            [class.correct]="getQuestionResult(question.id)?.correctAnswer === 'C' && isSubmitted"
+            [class.incorrect]="getQuestionResult(question.id)?.userAnswer === 'C' && !getQuestionResult(question.id)?.isCorrect && isSubmitted"
+            (click)="selectAnswer(question.id, 'C')">
+            <span class="option-letter">C</span> {{ question.optionC }}
+          </div>
+          <div 
+            class="option-item" 
+            [class.selected]="answers[question.id] === 'D'"
+            [class.disabled]="isSubmitted"
+            [class.correct]="getQuestionResult(question.id)?.correctAnswer === 'D' && isSubmitted"
+            [class.incorrect]="getQuestionResult(question.id)?.userAnswer === 'D' && !getQuestionResult(question.id)?.isCorrect && isSubmitted"
+            (click)="selectAnswer(question.id, 'D')">
+            <span class="option-letter">D</span> {{ question.optionD }}
+          </div>
+        </div>
+
+        <!-- Explicación post-envío -->
+        <div *ngIf="getQuestionResult(question.id) as result" class="explanation-box" [ngClass]="result.isCorrect ? 'bg-success' : 'bg-danger'" style="margin-top: 16px; padding: 16px; border-radius: var(--radius-sm);">
+          <div style="display: flex; align-items: center; gap: 8px; font-weight: 600; margin-bottom: 8px;">
+            <lucide-icon *ngIf="result.isCorrect" name="check-circle" style="color: var(--success);"></lucide-icon>
+            <lucide-icon *ngIf="!result.isCorrect" name="alert-circle" style="color: var(--danger);"></lucide-icon>
+            <span [style.color]="result.isCorrect ? 'var(--success)' : 'var(--danger)'">
+              {{ result.isCorrect ? '¡Correcto!' : 'Incorrecto (La respuesta era ' + result.correctAnswer + ')' }}
+            </span>
+          </div>
+          <p style="margin: 0; color: var(--text-secondary); font-size: 14px;">
+            {{ result.explanation }}
+          </p>
+        </div>
+      </app-card>
+    </div>
+
+    <div *ngIf="!isSubmitted" style="display: flex; justify-content: flex-end; margin-top: 24px;">
+      <app-button variant="primary" (onClick)="submitQuiz()">
+        Enviar Respuestas
+      </app-button>
+    </div>
+    <div *ngIf="isSubmitted" style="display: flex; justify-content: flex-end; margin-top: 24px;">
+      <app-button variant="primary" (onClick)="goBack()">
+        Volver a Cuestionarios
+      </app-button>
+    </div>
+  </div>
+</div>

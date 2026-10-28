@@ -1,0 +1,194 @@
+<div class="dashboard-header" style="margin-bottom: 32px; display: flex; justify-content: space-between; align-items: center;">
+  <h1>Dashboard Financiero</h1>
+  <div class="filters flex" *ngIf="recentTransactions.length > 0">
+    <select class="filter-select">
+      <option>Todas las cuentas</option>
+      <option *ngFor="let m of months" [value]="m.name">{{m.name}}</option>
+    </select>
+  </div>
+</div>
+
+<div id="tour-dashboard-center" *ngIf="recentTransactions.length === 0" class="card" style="text-align: center; padding: 64px 24px; background: var(--color-surface); border-radius: var(--radius-xl); border: 1px solid var(--color-border); margin-top: 32px;">
+  <div class="icon text-primary" style="display: flex; justify-content: center; margin-bottom: 24px; opacity: 0.8;">
+    <svg *ngIf="!hasAccounts" xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+    <svg *ngIf="hasAccounts" xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="12" x2="12" y1="18" y2="12"/><line x1="9" x2="15" y1="15" y2="15"/></svg>
+  </div>
+  <h2 style="font-size: 28px; margin-bottom: 16px;">
+    {{ !hasAccounts ? '¡Bienvenido a SART Eco!' : '¡Tu cuenta está lista!' }}
+  </h2>
+  <p class="text-secondary" style="max-width: 500px; margin: 0 auto 32px auto; font-size: 16px; line-height: 1.6;">
+    <ng-container *ngIf="!hasAccounts">
+      Estás a un paso de tomar el control total de tus finanzas. Para que el dashboard cobre vida, necesitas registrar tu primera cuenta bancaria e importar una cartola.
+    </ng-container>
+    <ng-container *ngIf="hasAccounts">
+      Ahora que tienes una cuenta registrada, el siguiente paso es adjuntar tu primera cartola bancaria para que podamos analizar tus movimientos automáticamente.
+    </ng-container>
+  </p>
+  <div style="display: flex; gap: 16px; justify-content: center;">
+    <a *ngIf="!hasAccounts" routerLink="/accounts" class="btn btn-primary" style="font-weight: 600; padding: 12px 24px;">1. Crear Cuenta</a>
+    <a *ngIf="!hasAccounts" routerLink="/import" class="btn btn-secondary" style="font-weight: 600; padding: 12px 24px; background: transparent; border: 1px solid var(--color-border); color: var(--color-text-secondary);">2. Adjuntar Cartola</a>
+    
+    <a *ngIf="hasAccounts" routerLink="/import" class="btn btn-primary" style="font-weight: 600; padding: 12px 32px;">Adjuntar Cartola</a>
+  </div>
+</div>
+
+<div class="alerts-section" *ngIf="alerts.length > 0" style="margin-bottom: 32px;">
+  <h2 style="font-size: 18px; margin-bottom: 16px;">Alertas Inteligentes</h2>
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+    <div *ngFor="let alert of alerts" 
+         [style.background]="alert.type === 'danger' ? 'rgba(239, 68, 68, 0.1)' : 'rgba(245, 158, 11, 0.1)'"
+         [style.border-left]="'4px solid ' + (alert.type === 'danger' ? '#ef4444' : '#f59e0b')"
+         style="padding: 16px; border-radius: 0 8px 8px 0; display: flex; align-items: center; gap: 12px;">
+      <svg *ngIf="alert.type === 'danger'" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <svg *ngIf="alert.type === 'warning'" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <span [style.color]="alert.type === 'danger' ? '#ef4444' : '#f59e0b'" style="font-weight: 500;">{{ alert.message }}</span>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="recentTransactions.length > 0">
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <h3>Saldo Total</h3>
+      <div class="kpi-value text-primary">${{ totalBalance | number }}</div>
+    </div>
+    <div class="kpi-card">
+      <h3>Ingresos del Mes</h3>
+      <div class="kpi-value text-success">+${{ incomes | number }}</div>
+    </div>
+    <div class="kpi-card">
+      <h3>Egresos del Mes</h3>
+      <div class="kpi-value text-danger">-${{ expenses | number }}</div>
+    </div>
+  </div>
+
+  <div class="dashboard-content">
+    
+    <!-- LEFT COLUMN -->
+    <div class="left-col" style="display: flex; flex-direction: column; gap: 24px;">
+      
+      <!-- Evolution Chart -->
+      <div class="card chart-section">
+        <h2>Evolución de Gastos</h2>
+        <div class="placeholder-chart" style="height: 200px; display: flex; align-items: flex-end; gap: 12px; padding-top: 24px;">
+          <div *ngFor="let m of months" style="display: flex; flex-direction: column; align-items: center; flex: 1; height: 100%; justify-content: flex-end;">
+            <div style="width: 100%; background: var(--color-primary); border-radius: 6px 6px 0 0; transition: height 0.4s ease;" 
+                 [style.height.%]="m.height" 
+                 [style.opacity]="m.height >= 95 ? '1' : '0.6'"></div>
+            <span class="text-secondary text-sm" style="margin-top: 8px; font-weight: 500; font-size: 11px;">{{ m.name.substring(0,3) }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Budgets Limits -->
+      <div class="card" *ngIf="budgets.length > 0">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <h2 style="margin: 0; font-size: 18px;">Tus Límites</h2>
+          <a routerLink="/planning" style="font-size: 13px; font-weight: 500; color: var(--color-primary); text-decoration: none;">Ver todos</a>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px;">
+          
+          <div *ngFor="let b of budgets.slice(0, 4)" style="padding: 12px; border: 1px solid var(--color-border); border-radius: 12px; background: var(--color-bg);">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+              <span style="font-size: 18px;">{{ b.categoryIcon || '📊' }}</span>
+              <strong style="font-size: 14px;">{{ b.name }}</strong>
+            </div>
+            
+            <div style="width: 100%; height: 6px; background: var(--color-surface); border-radius: 99px; overflow: hidden; margin-bottom: 8px;">
+              <div style="height: 100%; transition: width 0.3s;"
+                   [style.width]="(b.percentage > 100 ? 100 : b.percentage) + '%'"
+                   [style.background]="b.status === 'exceeded' || b.status === 'limit' ? 'var(--color-danger)' : b.status === 'warning' ? 'var(--color-warning)' : 'var(--color-primary)'">
+              </div>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; font-size: 12px;">
+              <span [style.color]="b.status === 'exceeded' || b.status === 'limit' ? 'var(--color-danger)' : b.status === 'warning' ? 'var(--color-warning)' : 'var(--color-text-secondary)'">
+                {{ b.percentage | number:'1.0-0' }}%
+              </span>
+              <span class="text-secondary">${{ b.spent | number }} / ${{ b.amount | number }}</span>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+
+    </div>
+    
+    <!-- RIGHT COLUMN -->
+    <div class="right-col" style="display: flex; flex-direction: column; gap: 24px;">
+      
+      <!-- Commitments Overview -->
+      <div class="card" style="background: var(--color-bg); border-color: transparent;">
+        <h3 style="margin-top: 0; font-size: 16px; margin-bottom: 16px; color: var(--color-text-secondary);">Proyección del Mes</h3>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <span>Ingresos:</span>
+          <span class="text-success font-bold">+${{ incomes | number }}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <span>Comprometido:</span>
+          <span class="text-danger font-bold">-${{ commitments.total | number }}</span>
+        </div>
+        <div style="border-top: 1px dashed var(--color-border); margin: 12px 0;"></div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-weight: 500;">Disponible Estimado:</span>
+          <span style="font-size: 18px; font-weight: 700; color: var(--color-text-primary);">${{ availableEstimate | number }}</span>
+        </div>
+      </div>
+
+      <!-- Upcoming Payments -->
+      <div class="card" *ngIf="upcomingPayments.length > 0">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <h2 style="margin: 0; font-size: 18px;">Próximos Pagos</h2>
+          <a routerLink="/planning" style="font-size: 13px; font-weight: 500; color: var(--color-primary); text-decoration: none;">Calendario</a>
+        </div>
+        
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div *ngFor="let p of upcomingPayments" style="display: flex; align-items: center; gap: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--color-border); justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div style="width: 36px; height: 36px; border-radius: 8px; background: var(--color-bg); display: flex; align-items: center; justify-content: center; font-size: 18px;">
+                {{ p.categoryIcon || '💳' }}
+              </div>
+              <div>
+                <div style="font-weight: 500; font-size: 14px;">{{ p.name }}</div>
+                <div style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">
+                  <span *ngIf="p.daysUntilDue === 0" style="color: var(--color-danger); font-weight: 600;">¡Hoy!</span>
+                  <span *ngIf="p.daysUntilDue > 0">En {{ p.daysUntilDue }} días</span>
+                  <span *ngIf="p.daysUntilDue < 0" style="color: var(--color-danger); font-weight: 600;">Atrasado</span>
+                </div>
+              </div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-weight: 600; font-size: 14px; color: var(--color-danger);">${{ p.amount | number }}</div>
+              <div style="font-size: 10px; font-weight: 600; margin-top: 4px;" [style.color]="getStatusColor(p.status)">
+                {{ p.status === 'PENDING' ? 'Pendiente' : p.status === 'PAID' ? 'Pagado' : p.status === 'OVERDUE' ? 'Vencido' : 'Omitido' }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Transactions -->
+      <div class="card recent-transactions">
+        <h2 style="font-size: 18px; margin-top: 0;">Últimos Movimientos</h2>
+        <ul style="list-style: none; padding: 0; margin: 0;">
+          <li *ngFor="let t of recentTransactions" class="transaction-item" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--color-border);">
+            <div style="display: flex; align-items: center;">
+              <div class="icon-circle" style="width: 36px; height: 36px; border-radius: 50%; background: var(--color-bg); display: flex; align-items: center; justify-content: center; margin-right: 12px; font-size: 16px;">
+                {{ getCategoryIcon(t.category) }}
+              </div>
+              <div>
+                <strong style="display: block; margin-bottom: 2px; font-size: 13px;">{{t.description}}</strong>
+                <div class="text-sm text-secondary" style="font-size: 11px;">{{t.date}}</div>
+              </div>
+            </div>
+            <div class="font-bold text-right" style="font-size: 13px;" [class.text-danger]="t.amount < 0" [class.text-success]="t.amount > 0">
+              {{ t.amount > 0 ? '+' : '' }}${{ t.amount | number }}
+            </div>
+          </li>
+        </ul>
+        <a routerLink="/transactions" class="btn btn-secondary" style="display: block; text-align: center; width: 100%; margin-top: 16px; background: transparent; border: 1px solid var(--color-border); padding: 8px; border-radius: var(--radius-md); color: var(--color-text-secondary); text-decoration: none;">Ver todos</a>
+      </div>
+      
+    </div>
+  </div>
+</div>

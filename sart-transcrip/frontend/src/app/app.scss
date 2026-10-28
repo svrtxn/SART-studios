@@ -1,0 +1,122 @@
+.app-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar {
+  height: 56px;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;            /* Centra verticalmente */
+  justify-content: space-between; /* Empuja un grupo a la izq y otro a la der */
+  background-color: var(--background); /* Usamos nuestra variable */
+  border-bottom: 1px solid var(--border); 
+  flex-shrink: 0;                 /* Evita que se encoja si hay mucho contenido */
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-left, .navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-left {
+  gap: 10px; /* Separación entre el logo y los tabs */
+}
+
+.navbar-right {
+  gap: 16px; /* Separación entre la barra de búsqueda y futuros iconos */
+}
+
+.navbar-logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.navbar-brand {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--text-primary);
+  letter-spacing: 0.3px;
+  line-height: 1;
+}
+
+/* Para el texto "-ECO" */
+.brand-accent {
+  color: var(--primary-blue);
+  font-weight: 600;
+}
+
+/* Botón por defecto */
+.btn-ghost-sm {
+  background: transparent;
+  border: 1px solid var(--border);
+  padding: 4px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--text-secondary); /* Gris */
+  transition: all 150ms ease-out;
+  font-family: 'Inter', sans-serif;
+  white-space: nowrap;
+  
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+}
+
+/* Hover: Cuando pasas el mouse */
+.btn-ghost-sm:hover {
+  background: var(--surface); /* Gris muy claro */
+  color: var(--text-primary);
+  border-color: #9CA3AF; /* Un borde un poco más oscuro */
+}
+
+/* Activo: Cuando el tab está seleccionado */
+.nav-tabs .btn-ghost-sm.active {
+  background: var(--surface);
+  color: var(--primary-blue); /* Se pinta azul */
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05); /* Sombra muy sutil */
+}
+
+.search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-box svg {
+  position: absolute;
+  left: 12px; /* Acomoda el icono dentro del input */
+  color: #9CA3AF; 
+  pointer-events: none; /* Para que al darle click no bloquee el input */
+}
+
+.search-box input {
+  width: 240px;
+  padding: 8px 12px 8px 36px; /* 36px a la izquierda para dejar espacio al ícono */
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface);
+  outline: none;
+  transition: all 150ms ease-out;
+}
+
+.search-box input:focus {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 2px rgba(25, 118, 255, 0.2); /* Aro azul de foco (halo) */
+}
+
+.main-content {
+  flex: 1;
+  background-color: var(--surface);
+}

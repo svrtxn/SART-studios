@@ -1,0 +1,22 @@
+<div class="accounts-header flex justify-between items-center mb-8">
+  <h1>Mis Cuentas</h1>
+  <button class="btn btn-primary">Agregar Cuenta</button>
+</div>
+
+<div class="accounts-grid">
+  <div *ngFor="let acc of accounts" class="account-card" [style.border-top-color]="acc.color || 'var(--primary-blue)'">
+    <div class="flex justify-between items-center mb-4">
+      <h3>{{ acc.name }}</h3>
+      <span class="badge" [class.badge-asset]="acc.nature === 'ASSET'" [class.badge-liability]="acc.nature === 'LIABILITY'">
+        {{ acc.nature === 'ASSET' ? 'Débito' : 'Crédito' }}
+      </span>
+    </div>
+    <div class="balance text-xl font-bold" [class.text-danger]="acc.currentBalance < 0">
+      ${{ acc.currentBalance | number }} {{ acc.currencyCode }}
+    </div>
+    <div class="actions flex justify-between mt-4 text-sm">
+      <a href="#" class="text-primary">Ver movimientos</a>
+      <a href="#" class="text-secondary">Editar</a>
+    </div>
+  </div>
+</div>
