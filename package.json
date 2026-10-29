@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Root workspace for SART Studio projects",
   "scripts": {
+    "dev": "npm run start:main",
     "start": "concurrently \"npm run start:main\" \"npm run start:food:api\" \"npm run start:food:web\" \"npm run start:transcrib:api\" \"npm run start:transcrib:web\" \"npm run start:eco:api\" \"npm run start:eco:web\"",
     "start:main": "cd sart-main && npm run dev",
     "start:food:api": "cd sart-food/backend && cross-env PORT=3001 npm run start:dev",

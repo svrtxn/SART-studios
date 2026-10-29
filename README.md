@@ -6,7 +6,11 @@ Transcrip se muestran como próximamente.
 
 ## Iniciar el proyecto en Windows
 
-Abre `Iniciar SART Studios.bat` desde el Explorador de archivos. El lanzador:
+Desde la raíz del repositorio, ejecuta `npm run dev` para iniciar únicamente la
+portada principal en <http://localhost:3000>.
+
+Para iniciar la portada y SART Aprende, abre `SART Studios.bat` desde el
+Explorador de archivos. El lanzador:
 
 1. Inicia la web principal en <http://127.0.0.1:3000>.
 2. Inicia SART Aprende en <http://127.0.0.1:3001>.
