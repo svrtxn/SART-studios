@@ -27,6 +27,11 @@ const STATIC_FILES = new Set([
   path.join("assets", "sart-aprende.png"),
   path.join("assets", "sart-aprende-dark.png"),
   path.join("assets", "guia-equipo-agentes-ia.pdf"),
+  path.join("design", "SART imgs", "S BASE.png"),
+  path.join("design", "SART imgs", "Aprende", "APRENDE COMPLETO.png"),
+  path.join("design", "SART imgs", "Finanzas", "FINANZAS COMPLETO.png"),
+  path.join("design", "SART imgs", "Despensa", "DESPENSA COMPLETO.png"),
+  path.join("design", "SART imgs", "Transcrip", "TRANSCRIP COMPLETO.png"),
 ]);
 const MIME_TYPES = {
   ".css": "text/css; charset=utf-8",

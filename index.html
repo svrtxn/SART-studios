@@ -5,76 +5,285 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Organiza cursos y rutinas de aprendizaje en distintas áreas, sigue tu avance y estudia con sesiones de enfoque."
+      content="Productos digitales independientes de SART STUDIOS para aprender, organizar finanzas, gestionar la despensa y transcribir audio."
     />
-    <meta name="theme-color" content="#ffffff" />
-    <title>SART STUDIOS | Panel de aprendizaje</title>
+    <meta name="theme-color" content="#1A1C20" />
+    <title>SART STUDIOS | Herramientas independientes, un solo entorno</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
-    <script src="app.js" defer></script>
   </head>
   <body>
-    <header class="topbar">
-      <a class="brand" href="#" id="home-link" aria-label="SART - Aprende, inicio">
-        <img class="brand-logo-light" src="assets/sart-aprende.png" alt="SART - Aprende" />
-        <img class="brand-logo-dark" src="assets/sart-aprende-dark.png" alt="" aria-hidden="true" />
-      </a>
-      <div class="topbar-context">
-        <span class="status-dot" aria-hidden="true"></span>
-        <span>SART - Aprende</span>
-      </div>
-      <div class="topbar-actions">
-        <button
-          class="icon-button theme-toggle"
-          id="theme-toggle"
-          type="button"
-          aria-label="Activar modo oscuro"
-          title="Activar modo oscuro"
-        ></button>
+    <header class="floating-header-wrapper">
+      <nav aria-label="Navegación principal" class="floating-navbar">
+        <a aria-label="SART STUDIOS, ir al inicio" class="brand brand-enlarged" href="#inicio">
+          <img
+            alt=""
+            class="brand-image"
+            height="40"
+            src="design/SART%20imgs/S%20BASE.png"
+            width="40"
+          />
+          <span>SART</span>
+        </a>
+        <div class="nav-links">
+          <a class="nav-link" href="#ecosistema">Ecosistema</a>
+          <a class="nav-link" href="#origen">Origen</a>
+        </div>
+        <div class="navbar-actions">
+          <button
+            aria-label="Cambiar a modo claro"
+            class="theme-toggle"
+            id="theme-toggle"
+            title="Cambiar tema"
+            type="button"
+          >
+            <svg class="theme-icon-sun" aria-hidden="true" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" />
+            </svg>
+            <svg class="theme-icon-moon" aria-hidden="true" viewBox="0 0 24 24">
+              <path d="M20.2 15.4A8.4 8.4 0 0 1 8.6 3.8 8.5 8.5 0 1 0 20.2 15.4Z" />
+            </svg>
+          </button>
+          <button
+            aria-expanded="false"
+            aria-label="Abrir menú de navegación"
+            class="mobile-menu-toggle icon-button"
+            id="mobile-menu-toggle"
+            type="button"
+          >
+            <span class="hamburger-bar"></span>
+          </button>
+        </div>
+      </nav>
+      <div class="mobile-menu-drawer" id="mobile-menu" hidden>
+        <a class="mobile-nav-link" href="#inicio">Inicio</a>
+        <a class="mobile-nav-link" href="#ecosistema">Ecosistema</a>
+        <a class="mobile-nav-link" href="#origen">Origen</a>
       </div>
     </header>
 
-    <main id="app" class="app-shell" tabindex="-1">
-      <div class="loading-state" role="status">Preparando tus rutas de aprendizaje...</div>
-    </main>
+    <main class="sart-home" id="inicio">
+      <div aria-hidden="true" class="site-shell">
+        <span class="site-shell-orbit site-shell-orbit--one"></span>
+        <span class="site-shell-orbit site-shell-orbit--two"></span>
+        <span class="site-shell-grain"></span>
+      </div>
 
-    <div
-      id="modal"
-      class="modal-overlay"
-      role="presentation"
-      hidden
-    >
-      <section
-        class="modal-card"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="modal-title"
-        aria-describedby="modal-message"
-      >
-        <button class="icon-button modal-close" type="button" aria-label="Cerrar diálogo" data-close-modal>
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="m18 6-12 12M6 6l12 12"></path>
-          </svg>
-        </button>
-        <div class="modal-mark" aria-hidden="true">
-          <svg viewBox="0 0 24 24">
-            <path d="m12 3 1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2L12 3Z"></path>
-            <path d="m19 16 .8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16Z"></path>
+      <section aria-labelledby="hero-title" class="hero section-shell">
+        <div class="hero-copy-block">
+          <div class="eyebrow">
+            <span aria-hidden="true" class="eyebrow-dot"></span>
+            Estudio digital independiente
+          </div>
+          <h1 id="hero-title">
+            <span class="hero-kicker">SART STUDIOS:</span>
+            <span class="hero-headline">Herramientas independientes, un solo entorno.</span>
+          </h1>
+          <div class="hero-bottom">
+            <p>Diseñamos productos modulares que hacen simple lo complejo.</p>
+            <a aria-label="Explorar el ecosistema" class="round-cta" href="#ecosistema">
+              <span aria-hidden="true">↓</span>
+            </a>
+          </div>
+        </div>
+
+        <div aria-label="Ilustración de una desarrolladora creativa" class="avatar-stage">
+          <div class="avatar-orbit">
+            <span>CREATIVE DEVELOPER</span>
+            <img alt="" height="28" src="design/SART%20imgs/S%20BASE.png" width="28" />
+          </div>
+          <svg aria-hidden="true" viewBox="0 0 430 500">
+            <ellipse class="avatar-shadow" cx="215" cy="470" rx="145" ry="18"></ellipse>
+            <path class="avatar-hoodie" d="M103 294c21-48 61-72 112-72s91 24 112 72l31 158H72z"></path>
+            <path class="avatar-neck" d="M176 191h78v78c-21 22-57 22-78 0z"></path>
+            <ellipse class="avatar-skin" cx="215" cy="145" rx="76" ry="91"></ellipse>
+            <path class="avatar-hair" d="M141 151c-8-55 14-104 72-106 60-2 88 43 70 111-12-29-26-55-43-74-26 27-58 43-99 49z"></path>
+            <path class="avatar-hair" d="M144 134c-11 45 0 87 30 113l-17 13c-39-29-52-80-37-132zm137-5c15 45 6 91-25 119l17 12c37-31 48-84 30-131z"></path>
+            <path class="avatar-features" d="M178 164q10 8 20 0m35 0q10 8 20 0m-48 34q12 9 24 0"></path>
+            <g class="avatar-glasses">
+              <rect height="31" rx="13" width="44" x="165" y="147"></rect>
+              <rect height="31" rx="13" width="44" x="222" y="147"></rect>
+              <path d="M209 159h13m-57-2-15-5m116 5 14-5"></path>
+            </g>
+            <path class="avatar-laptop" d="M144 332h142l-8 92H152z"></path>
+            <path class="avatar-laptop-mark" d="M181 377h69m-58 14h47"></path>
+            <path class="avatar-star" d="m332 77 8 20 20 8-20 8-8 20-8-20-20-8 20-8z"></path>
           </svg>
         </div>
-        <p class="eyebrow">SART STUDIOS · APRENDIZAJE</p>
-        <h2 id="modal-title">Aviso</h2>
-        <p id="modal-message" class="modal-message"></p>
-        <button class="button button-primary modal-action" type="button" data-close-modal>
-          Entendido
-        </button>
       </section>
-    </div>
-    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+      <div aria-label="MICRO-FRONTENDS · NEXT.JS · REACT · NODE.JS · ARQUITECTURA MODULAR · SART APRENDE · SART FINANZAS" class="marquee">
+        <div aria-hidden="true" class="marquee-track">
+          <span>MICRO-FRONTENDS · NEXT.JS · REACT · NODE.JS · ARQUITECTURA MODULAR · SART APRENDE · SART FINANZAS · </span>
+          <span>MICRO-FRONTENDS · NEXT.JS · REACT · NODE.JS · ARQUITECTURA MODULAR · SART APRENDE · SART FINANZAS · </span>
+        </div>
+      </div>
+
+      <section aria-labelledby="ecosystem-title" class="ecosystem section-shell" id="ecosistema">
+        <div class="section-heading">
+          <div>
+            <span class="section-index">[ 01 — ECOSISTEMA ]</span>
+            <h2 id="ecosystem-title">Cuatro ideas.<br />Un mismo pulso.</h2>
+          </div>
+          <p>Cada producto vive de forma independiente, pero comparte una arquitectura centrada en las personas.</p>
+        </div>
+        <div class="products-grid">
+          <article class="product-card product-card--wide">
+            <div class="product-card-top">
+              <span>Educación / 01</span>
+              <span aria-hidden="true" class="product-card-arrow">↗</span>
+            </div>
+            <div class="product-card-copy">
+              <span class="product-number">01</span>
+              <h3>SART Aprende</h3>
+              <p>Rutas de aprendizaje, módulos y sesiones de enfoque para avanzar con intención.</p>
+            </div>
+            <div class="product-logo-frame">
+              <img alt="Logotipo de SART Aprende" class="product-logo-image" src="design/SART%20imgs/Aprende/APRENDE%20COMPLETO.png" />
+            </div>
+            <div class="product-card-footer">
+              <span class="product-status product-status--ready"><span aria-hidden="true" class="status-indicator"></span>Disponible</span>
+              <a class="product-open-link" href="http://127.0.0.1:3001/" rel="noreferrer" target="_blank">Abrir producto <span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+          <article class="product-card">
+            <div class="product-card-top">
+              <span>Fintech / 02</span>
+              <span aria-hidden="true" class="product-card-arrow">↗</span>
+            </div>
+            <div class="product-card-copy">
+              <span class="product-number">02</span>
+              <h3>SART Finanzas</h3>
+              <p>Una forma más clara de ordenar gastos, presupuestos y decisiones financieras.</p>
+            </div>
+            <div class="product-logo-frame">
+              <img alt="Logotipo de SART Finanzas" class="product-logo-image" src="design/SART%20imgs/Finanzas/FINANZAS%20COMPLETO.png" />
+            </div>
+            <div class="product-card-footer">
+              <span class="product-status"><span aria-hidden="true" class="status-indicator"></span>En desarrollo</span>
+              <span class="product-open-link product-open-link--disabled">Próximamente</span>
+            </div>
+          </article>
+          <article class="product-card">
+            <div class="product-card-top">
+              <span>Foodtech / 03</span>
+              <span aria-hidden="true" class="product-card-arrow">↗</span>
+            </div>
+            <div class="product-card-copy">
+              <span class="product-number">03</span>
+              <h3>SART Despensa</h3>
+              <p>Organiza los ingredientes de casa y encuentra mejores formas de aprovecharlos.</p>
+            </div>
+            <div class="product-logo-frame">
+              <img alt="Logotipo de SART Despensa" class="product-logo-image" src="design/SART%20imgs/Despensa/DESPENSA%20COMPLETO.png" />
+            </div>
+            <div class="product-card-footer">
+              <span class="product-status"><span aria-hidden="true" class="status-indicator"></span>En desarrollo</span>
+              <span class="product-open-link product-open-link--disabled">Próximamente</span>
+            </div>
+          </article>
+          <article class="product-card product-card--wide">
+            <div class="product-card-top">
+              <span>Audio / 04</span>
+              <span aria-hidden="true" class="product-card-arrow">↗</span>
+            </div>
+            <div class="product-card-copy">
+              <span class="product-number">04</span>
+              <h3>SART Transcrip</h3>
+              <p>Convierte audios y notas de voz en texto legible y fácil de revisar.</p>
+            </div>
+            <div class="product-logo-frame">
+              <img alt="Logotipo de SART Transcrip" class="product-logo-image" src="design/SART%20imgs/Transcrip/TRANSCRIP%20COMPLETO.png" />
+            </div>
+            <div class="product-card-footer">
+              <span class="product-status"><span aria-hidden="true" class="status-indicator"></span>En desarrollo</span>
+              <span class="product-open-link product-open-link--disabled">Próximamente</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="origin-title" class="origin section-shell" id="origen">
+        <div class="origin-label">
+          <span>[ 02 — MANIFIESTO ]</span>
+          <span>STGO, CHILE</span>
+        </div>
+        <div class="origin-copy-wrap">
+          <p id="origin-title">
+            SART STUDIOS nace de la visión de <span>Steffi Ryser</span>, creadora y desarrolladora.
+            Este espacio centraliza <span>herramientas digitales</span>, unificando tecnología
+            robusta con un <span>diseño centrado en las personas</span>.
+          </p>
+        </div>
+        <div aria-hidden="true" class="origin-mark">
+          <img alt="" src="design/SART%20imgs/S%20BASE.png" />
+        </div>
+      </section>
+
+      <footer class="site-footer">
+        <div class="footer-inner section-shell">
+          <p class="footer-cta-title">¿Construimos algo<br /><em>extraordinario?</em></p>
+          <a class="footer-contact" href="mailto:hola@sartstudios.cl">
+            <span>Hablemos</span><span aria-hidden="true">↗</span>
+          </a>
+          <div class="footer-meta">
+            <span>© 2026 SART STUDIOS</span>
+            <div class="footer-links">
+              <a href="mailto:hola@sartstudios.cl">Contacto</a>
+            </div>
+            <a href="#inicio">Volver arriba ↑</a>
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <script>
+      const themeToggle = document.querySelector("#theme-toggle");
+      const mobileMenuToggle = document.querySelector("#mobile-menu-toggle");
+      const mobileMenu = document.querySelector("#mobile-menu");
+      const savedTheme = window.localStorage.getItem("sart-theme");
+      const initialTheme = savedTheme === "light" ? "light" : "dark";
+
+      function setTheme(theme) {
+        document.body.dataset.theme = theme;
+        themeToggle.setAttribute("aria-label", `Cambiar a modo ${theme === "dark" ? "claro" : "oscuro"}`);
+        window.localStorage.setItem("sart-theme", theme);
+      }
+
+      setTheme(initialTheme);
+
+      themeToggle.addEventListener("click", () => {
+        setTheme(document.body.dataset.theme === "dark" ? "light" : "dark");
+      });
+
+      mobileMenuToggle.addEventListener("click", () => {
+        const isExpanded = mobileMenuToggle.getAttribute("aria-expanded") === "true";
+        mobileMenuToggle.setAttribute("aria-expanded", String(!isExpanded));
+        mobileMenuToggle.setAttribute("aria-label", isExpanded ? "Abrir menú de navegación" : "Cerrar menú");
+        mobileMenu.hidden = isExpanded;
+      });
+
+      mobileMenu.addEventListener("click", (event) => {
+        if (event.target.closest("a")) {
+          mobileMenu.hidden = true;
+          mobileMenuToggle.setAttribute("aria-expanded", "false");
+          mobileMenuToggle.setAttribute("aria-label", "Abrir menú de navegación");
+        }
+      });
+
+      document.querySelectorAll(".product-card").forEach((card) => {
+        card.addEventListener("pointermove", (event) => {
+          const bounds = card.getBoundingClientRect();
+          card.style.setProperty("--mouse-x", `${event.clientX - bounds.left}px`);
+          card.style.setProperty("--mouse-y", `${event.clientY - bounds.top}px`);
+        });
+      });
+    </script>
   </body>
 </html>
